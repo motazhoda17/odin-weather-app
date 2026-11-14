@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+# Your real API key lives here. Never commit it!
+src/config.js
