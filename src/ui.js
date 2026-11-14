@@ -1,5 +1,6 @@
 import { formatTemp } from "./units.js";
 import { getIcon } from "./icons.js";
+import { applyTheme } from "./theme.js";
 
 const weatherContainer = document.querySelector("#weather");
 const statusMessage = document.querySelector("#status");
@@ -70,6 +71,7 @@ function createForecast(forecast, unit) {
 
 // Clears the old weather and draws the new one in the chosen unit.
 export function renderWeather(weather, unit) {
+  applyTheme(weather.current.icon);
   weatherContainer.replaceChildren(
     createCurrentCard(weather, unit),
     createForecast(weather.forecast, unit),

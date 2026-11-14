@@ -1,3 +1,253 @@
+/* ---------- Theme colors ----------
+   The page background changes with the weather. JavaScript sets
+   <body data-theme="...">, and each theme just swaps these variables. */
+:root {
+  --bg: linear-gradient(160deg, #6a85b6, #bac8e0);
+  --card: rgba(255, 255, 255, 0.85);
+  --text: #1d2433;
+  --muted: #4a5568;
+  --accent: #2b6cb0;
+  --error: #c53030;
+}
+
+[data-theme="sunny"] {
+  --bg: linear-gradient(160deg, #f6d365, #fda085);
+  --accent: #c05621;
+}
+
+[data-theme="cloudy"] {
+  --bg: linear-gradient(160deg, #8e9eab, #d7dde2);
+  --accent: #4a5568;
+}
+
+[data-theme="rainy"] {
+  --bg: linear-gradient(160deg, #3a6186, #89a7c2);
+  --accent: #2c5282;
+}
+
+[data-theme="stormy"] {
+  --bg: linear-gradient(160deg, #232526, #5b6467);
+  --accent: #553c9a;
+}
+
+[data-theme="snowy"] {
+  --bg: linear-gradient(160deg, #e6e9f0, #eef1f5);
+  --accent: #3182ce;
+}
+
+[data-theme="night"] {
+  --bg: linear-gradient(160deg, #0f2027, #2c5364);
+  --accent: #5a67d8;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: system-ui, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  background-attachment: fixed;
+}
+
+.app {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+h1 {
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Hides the label visually but keeps it for screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Search form and buttons ---------- */
+.search-form {
+  display: flex;
+  gap: 8px;
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 0; /* lets the input shrink on small screens */
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+}
+
+button {
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.unit-toggle {
+  align-self: flex-end;
+}
+
+/* ---------- Status (loading / error) ---------- */
+.status {
+  margin: 0;
+  min-height: 1.5em;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* A simple spinning circle in front of the loading text. */
+.status--loading::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 8px;
+  vertical-align: -2px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status--error {
+  padding: 12px 14px;
+  color: var(--error);
+  background: var(--card);
+  border-radius: 8px;
+}
+
+/* ---------- Current weather card ---------- */
+.weather {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.current {
+  padding: 24px;
+  text-align: center;
+  background: var(--card);
+  border-radius: 16px;
+}
+
+.current p {
+  margin: 4px 0;
+}
+
+.current__location {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.current__icon {
+  font-size: 4rem;
+}
+
+.current__temp {
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.current__conditions {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.current__description {
+  color: var(--muted);
+}
+
+.current__details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+
+/* ---------- 7 day forecast ---------- */
+.forecast {
+  display: grid;
+  /* As many columns as fit, each at least 80px wide. */
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.forecast__day {
+  padding: 12px 4px;
+  text-align: center;
+  background: var(--card);
+  border-radius: 12px;
+}
+
+.forecast__day p {
+  margin: 4px 0;
+}
+
+.forecast__name {
+  font-weight: 600;
+}
+
+.forecast__icon {
+  font-size: 1.75rem;
+}
+
+.forecast__temps {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.footer a {
+  color: #fff;
 }
