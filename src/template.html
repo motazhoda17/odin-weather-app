@@ -6,6 +6,20 @@
     <title>Weather App</title>
   </head>
   <body>
-    <h1>Weather App</h1>
+    <main class="app">
+      <h1>Weather</h1>
+
+      <form id="search-form" class="search-form">
+        <label for="location-input" class="visually-hidden">Location</label>
+        <input
+          type="text"
+          id="location-input"
+          name="location"
+          placeholder="City, address or zip code"
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+    </main>
   </body>
 </html>
