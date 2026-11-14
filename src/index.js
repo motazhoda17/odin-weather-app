@@ -1,7 +1,15 @@
 import "./styles.css";
 import { fetchWeather } from "./weatherApi.js";
+import { processWeatherData } from "./processWeather.js";
 
-// Step 2 of the assignment: just log the raw data for now.
-fetchWeather("London")
-  .then((data) => console.log(data))
-  .catch((error) => console.error(error.message));
+// Step 3: log only the data we need.
+async function logWeather(location) {
+  try {
+    const rawData = await fetchWeather(location);
+    console.log(processWeatherData(rawData));
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+logWeather("London");
