@@ -10,6 +10,7 @@ export function getTheme(iconName) {
 }
 
 export function applyTheme(iconName) {
-  // Sets <body data-theme="sunny"> (for example), which the CSS reacts to.
-  document.body.dataset.theme = getTheme(iconName);
+  // Sets <html data-theme="sunny"> (for example), which the CSS reacts to.
+  // We use <html> so the background covers the whole page, however long.
+  document.documentElement.dataset.theme = getTheme(iconName);
 }

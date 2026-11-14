@@ -1,6 +1,6 @@
 /* ---------- Theme colors ----------
    The page background changes with the weather. JavaScript sets
-   <body data-theme="...">, and each theme just swaps these variables. */
+   <html data-theme="...">, and each theme just swaps these variables. */
 :root {
   --bg: linear-gradient(160deg, #6a85b6, #bac8e0);
   --card: rgba(255, 255, 255, 0.85);
@@ -45,6 +45,11 @@
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+  background: var(--bg);
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -52,8 +57,6 @@ body {
   flex-direction: column;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: var(--bg);
-  background-attachment: fixed;
 }
 
 .app {
@@ -121,12 +124,16 @@ button:disabled {
 /* ---------- Status (loading / error) ---------- */
 .status {
   margin: 0;
-  min-height: 1.5em;
   color: #fff;
   font-weight: 600;
 }
 
 /* A simple spinning circle in front of the loading text. */
+/* Take up no space when there's nothing to say. */
+.status:empty {
+  display: none;
+}
+
 .status--loading::before {
   content: "";
   display: inline-block;
