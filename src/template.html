@@ -25,6 +25,10 @@
         Show °C
       </button>
 
+      <!-- Shows "Loading..." or an error message. aria-live makes screen
+           readers announce changes to it. -->
+      <p id="status" class="status" aria-live="polite"></p>
+
       <div id="weather" class="weather"></div>
     </main>
   </body>

@@ -1,7 +1,7 @@
 import "./styles.css";
 import { fetchWeather } from "./weatherApi.js";
 import { processWeatherData } from "./processWeather.js";
-import { renderWeather } from "./ui.js";
+import { renderWeather, showLoading, hideLoading, showError } from "./ui.js";
 
 const form = document.querySelector("#search-form");
 const input = document.querySelector("#location-input");
@@ -13,12 +13,23 @@ let currentWeather = null;
 let unit = "F";
 
 async function searchWeather(location) {
+  showLoading(location);
+
   try {
     const rawData = await fetchWeather(location);
     currentWeather = processWeatherData(rawData);
+    hideLoading();
     renderWeather(currentWeather, unit);
   } catch (error) {
-    console.error(error.message);
+    // Errors from fetchWeather already have friendly messages. A failed
+    // network request throws a TypeError, which gets a general message.
+    hideLoading();
+    currentWeather = null;
+    showError(
+      error instanceof TypeError
+        ? "Couldn't reach the weather service. Check your connection."
+        : error.message,
+    );
   }
 }
 
