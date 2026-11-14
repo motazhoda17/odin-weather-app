@@ -38,7 +38,11 @@ function createCurrentCard(weather, unit) {
 
   const details = createElement("ul", "current__details");
   details.append(
-    createElement("li", "", `Feels like ${formatTemp(current.feelsLike, unit)}`),
+    createElement(
+      "li",
+      "",
+      `Feels like ${formatTemp(current.feelsLike, unit)}`,
+    ),
     createElement("li", "", `Humidity ${Math.round(current.humidity)}%`),
     createElement("li", "", `Wind ${Math.round(current.windSpeed)} mph`),
     createElement("li", "", `Rain ${Math.round(current.precipChance)}%`),

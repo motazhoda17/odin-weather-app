@@ -26,7 +26,9 @@ export async function fetchWeather(location) {
   // "succeeds", so we have to check response.ok ourselves.
   if (!response.ok) {
     if (response.status === 400) {
-      throw new Error(`Couldn't find "${location}". Check the spelling and try again.`);
+      throw new Error(
+        `Couldn't find "${location}". Check the spelling and try again.`,
+      );
     }
     if (response.status === 401) {
       throw new Error("The API key was rejected. Double-check src/config.js.");
